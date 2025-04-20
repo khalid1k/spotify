@@ -21,7 +21,9 @@
 //   lyrics: string;
 // }
 
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Artist } from 'src/modules/artist/entities/artist.entity';
+import { Playlist } from 'src/modules/playlist/entities/playlist.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinColumn, JoinTable, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Song {
@@ -32,7 +34,7 @@ export class Song {
   title: string;
 
   @Column({ type: 'json' })
-  artists: string[];
+  artists: number[];
 
   @Column({ type: 'date' })
   releasedDate: Date;
@@ -43,4 +45,11 @@ export class Song {
 
   @Column({ type: 'text', nullable: true })
   lyrics: string;
+
+  @ManyToMany(()=> Artist, (artist)=> artist.songs)
+  @JoinTable({name: "songs_artist"})
+  artist: Artist[];
+
+@ManyToOne(()=>Playlist, (playList)=> playList.songs)
+playList: Playlist;
 }

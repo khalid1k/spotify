@@ -6,8 +6,12 @@ import { LoggerMiddleware } from './common/middleware/logger/logger.middleware';
 import { SongsController } from './modules/songs/songs.controller';
 import { TypeOrmModule } from './dataSource/typeOrm.module';
 import { CatsModule } from './modules/cats/cats.module';
+import { UserModule } from './modules/user/user.module';
+import { ArtistModule } from './modules/artist/artist.module';
+import { PlaylistModule } from './modules/playlist/playlist.module';
+import { AuthModule } from './modules/auth/auth.module';
 @Module({
-  imports: [TypeOrmModule, SongsModule, CatsModule],
+  imports: [TypeOrmModule, SongsModule, CatsModule, UserModule, ArtistModule, PlaylistModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
