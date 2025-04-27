@@ -11,6 +11,8 @@ import {
   Put,
   Query,
   DefaultValuePipe,
+  UseGuards,
+  Request
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { createSongDto } from './dto/create-songs.dto';
@@ -18,16 +20,22 @@ import { updateSongDto } from './dto/updateSong.dto';
 import { UpdateResult } from 'typeorm';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Song } from './entities/song.entity';
+import { jwtAuthGuard } from '../auth/jwtAuthGuard';
+import { JwtArtistGuard } from '../auth/artistJwtGuard';
 @Controller('songs')
 export class SongsController {
   constructor(private songsService: SongsService) {}
 
   @Post()
-  create(@Body() createSongDto: createSongDto) {
+  @UseGuards(jwtAuthGuard)
+  @UseGuards(JwtArtistGuard)
+  create(@Body() createSongDto: createSongDto, @Request() req) {
+    console.log("user from the song controller is ", req.user);
     return this.songsService.createSong(createSongDto);
   }
 
   @Get()
+  @UseGuards(jwtAuthGuard)
   getAll() {
     try {
       return this.songsService.findAll();
@@ -40,6 +48,7 @@ export class SongsController {
     }
   }
   @Get(':id')
+  @UseGuards(jwtAuthGuard)
   findOne(
     @Param(
       'id',
@@ -80,4 +89,5 @@ export class SongsController {
     limit = limit > 100 ? 100 : limit;
     return this.songsService.paginate({ page, limit });
   }
+
 }

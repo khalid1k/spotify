@@ -10,8 +10,9 @@ import { UserModule } from './modules/user/user.module';
 import { ArtistModule } from './modules/artist/artist.module';
 import { PlaylistModule } from './modules/playlist/playlist.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 @Module({
-  imports: [TypeOrmModule, SongsModule, CatsModule, UserModule, ArtistModule, PlaylistModule, AuthModule],
+  imports: [ConfigModule.forRoot({isGlobal:true}),TypeOrmModule, SongsModule, CatsModule, UserModule, ArtistModule, PlaylistModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
