@@ -13,7 +13,7 @@ export const dataSourceOptions: DataSourceOptions = {
     __dirname + '/../modules/**/*.entity{.ts,.js}',
     __dirname + '/../modules/**/entities/*.entity{.ts,.js}',
   ],
-  synchronize: false, 
+  synchronize: true, 
   migrations: ["dist/migrations/*.js"],
 };
 
