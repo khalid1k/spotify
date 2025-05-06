@@ -4,15 +4,16 @@ import { AppService } from './app.service';
 import { SongsModule } from './modules/songs/songs.module';
 import { LoggerMiddleware } from './common/middleware/logger/logger.middleware';
 import { SongsController } from './modules/songs/songs.controller';
-import { TypeOrmModule } from './dataSource/typeOrm.module';
+import { dataSourceOptions } from './dataSource/data-source';
 import { CatsModule } from './modules/cats/cats.module';
 import { UserModule } from './modules/user/user.module';
 import { ArtistModule } from './modules/artist/artist.module';
 import { PlaylistModule } from './modules/playlist/playlist.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
-  imports: [ConfigModule.forRoot({isGlobal:true}),TypeOrmModule, SongsModule, CatsModule, UserModule, ArtistModule, PlaylistModule, AuthModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions),ConfigModule.forRoot({isGlobal:true, envFilePath: '.env'}),SongsModule, CatsModule, UserModule, ArtistModule, PlaylistModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
